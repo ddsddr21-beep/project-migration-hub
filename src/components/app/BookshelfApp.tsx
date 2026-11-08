@@ -2923,14 +2923,14 @@ export default function App() {
                   {/* Delimiter & Split Bar */}
                   <div className="pt-2 border-t border-white/5 space-y-2">
                     <div className="flex items-center justify-between gap-3 flex-wrap">
-                      <div className="flex items-center gap-2 min-w-[200px] flex-1">
+                      <div className="flex items-center gap-2 min-w-0 flex-1">
                         <label className="text-xs text-[var(--editorial-muted)] shrink-0 font-medium">رمز الفصل:</label>
                         <input
                           type="text"
                           value={customDelimiter}
                           onChange={(e) => setCustomDelimiter(e.target.value)}
                           placeholder="اختياري (مثال: | أو #)..."
-                          className="form-input text-xs font-mono py-1.5 px-3 bg-black/40 flex-1"
+                          className="form-input text-xs font-mono py-1.5 px-3 bg-black/40 flex-1 min-w-0 w-full"
                         />
                       </div>
 
