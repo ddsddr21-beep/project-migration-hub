@@ -39,7 +39,7 @@ export const Route = createFileRoute("/api/ai/context-translation")({
         const meanings = (dict?.meanings || []).slice(0, 2);
         const src = String(sourceContext?.current || "").slice(0, 4000);
         const tgt = String(targetContext?.current || "").slice(0, 4000);
-        const key = (process.env.GEMINI_API_KEY || "").trim();
+        const key = (process.env["GEMINI_API_KEY"] || "").trim();
         let keyIssue = false;
 
         if (key) {
