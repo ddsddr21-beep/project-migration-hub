@@ -1,14 +1,14 @@
 
 :root {
   /* Default Obsidian & Electric Violet Theme */
-  --bg-obsidian: #080a0d;
-  --bg-surface: #10141a;
-  --bg-card: rgba(18, 22, 28, 0.85);
-  --bg-input: rgba(10, 13, 18, 0.9);
-  --violet-primary: #8B5CF6;
-  --violet-light: #A78BFA;
-  --violet-dark: #6D28D9;
-  --violet-glow: rgba(139, 92, 246, 0.2);
+  --bg-obsidian: #0d0b09;
+  --bg-surface: #15120e;
+  --bg-card: rgba(26, 22, 17, 0.9);
+  --bg-input: rgba(16, 13, 10, 0.92);
+  --violet-primary: #B8925A;
+  --violet-light: #D9B97E;
+  --violet-dark: #7A5A2E;
+  --violet-glow: rgba(199, 166, 106, 0.18);
   --accent: #C7A66A;
   
   /* Text - Rich Scholarly Editorial Colors */
@@ -1427,7 +1427,7 @@ body.theme-emerald .paper-book-page {
 
 .word-link.active-word-pattern-match {
   color: #FFFFFF !important;
-  background: rgba(139, 92, 246, 0.75) !important;
+  background: rgba(199, 166, 106, 0.75) !important;
   border-bottom: 2px solid #F59E0B !important;
   box-shadow: 0 0 10px rgba(245, 158, 11, 0.45);
   position: relative;
@@ -1437,7 +1437,7 @@ body.theme-emerald .paper-book-page {
 
 @keyframes patternPulse {
   0%, 100% {
-    background-color: rgba(139, 92, 246, 0.7);
+    background-color: rgba(199, 166, 106, 0.7);
     box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
   }
   50% {
@@ -1516,7 +1516,7 @@ body.theme-emerald .word-link.active-word-pattern-match {
 }
 
 .ai-translation-box {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(30, 27, 75, 0.28) 100%);
+  background: linear-gradient(135deg, rgba(199, 166, 106, 0.12) 0%, rgba(40, 30, 18, 0.3) 100%);
   border: 1px solid rgba(167, 139, 250, 0.35);
   border-radius: 14px;
   padding: 0.85rem 1rem;
@@ -1525,7 +1525,7 @@ body.theme-emerald .word-link.active-word-pattern-match {
 }
 
 .ai-tag-badge {
-  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  background: linear-gradient(135deg, #C7A66A 0%, #7A5A2E 100%);
   color: #FFFFFF;
   font-size: 11px;
   font-weight: 700;
@@ -1534,7 +1534,7 @@ body.theme-emerald .word-link.active-word-pattern-match {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.35);
+  box-shadow: 0 2px 8px rgba(199, 166, 106, 0.35);
 }
 
 .ai-matched-word {
@@ -1570,9 +1570,9 @@ body.theme-emerald .word-link.active-word-pattern-match {
 }
 
 .vocab-card:hover {
-  border-color: rgba(139, 92, 246, 0.5);
+  border-color: rgba(199, 166, 106, 0.5);
   transform: translateY(-3px);
-  box-shadow: 0 14px 35px rgba(139, 92, 246, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 35px rgba(199, 166, 106, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 body.theme-parchment .vocab-card {
@@ -1625,10 +1625,10 @@ body.theme-emerald .vocab-card:hover {
 }
 
 .level-badge-2 {
-  background: rgba(139, 92, 246, 0.18);
+  background: rgba(199, 166, 106, 0.18);
   color: #DDD6FE;
-  border: 1px solid rgba(139, 92, 246, 0.42);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.18);
+  border: 1px solid rgba(199, 166, 106, 0.42);
+  box-shadow: 0 0 12px rgba(199, 166, 106, 0.18);
 }
 
 .level-badge-3 {
@@ -1657,9 +1657,9 @@ body.theme-emerald .vocab-card:hover {
 
 .review-quiz-option:hover:not(:disabled) {
   border-color: var(--violet-light);
-  background: rgba(139, 92, 246, 0.16);
+  background: rgba(199, 166, 106, 0.16);
   transform: translateX(-3px);
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.18);
+  box-shadow: 0 6px 20px rgba(199, 166, 106, 0.18);
 }
 
 .review-quiz-option.correct {
@@ -1720,17 +1720,17 @@ body.theme-emerald .vocab-card:hover {
 
 .study-card-front {
   background: linear-gradient(145deg, rgba(26, 20, 42, 0.95), rgba(15, 12, 28, 0.98));
-  border: 1.5px solid rgba(139, 92, 246, 0.35);
+  border: 1.5px solid rgba(199, 166, 106, 0.35);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .study-card-back {
   background: linear-gradient(145deg, rgba(20, 16, 36, 0.95), rgba(12, 10, 24, 0.98));
-  border: 1.5px solid rgba(139, 92, 246, 0.6);
+  border: 1.5px solid rgba(199, 166, 106, 0.6);
   transform: rotateY(180deg);
   position: absolute;
   inset: 0;
-  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 40px rgba(199, 166, 106, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 /* ======================== ALIGNMENT EDITOR ======================== */
@@ -4955,7 +4955,7 @@ body.theme-matrix .modal-overlay { background: rgba(0, 8, 4, .82) !important; }
 }
 
 .batch-excerpt-box.en {
-  border-left: 3px solid rgba(139, 92, 246, 0.8);
+  border-left: 3px solid rgba(199, 166, 106, 0.8);
 }
 
 body.theme-matrix .batch-excerpt-box {
