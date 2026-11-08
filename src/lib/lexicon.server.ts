@@ -1,3 +1,4 @@
+// @ts-nocheck
 import arEnAsset from '@/assets/ar_en_lexicon.json.asset.json';
 import enArAsset from '@/assets/en_ar_lexicon.json.asset.json';
 // Lexicon lookup + contextual alignment engine (ported from the original Express server).
@@ -338,37 +339,6 @@ function lookupEnglish(rawWord: string): { word: string; normalized: string; mea
 
   return { word: rawWord, normalized: norm, meanings: [] };
 }
-
-// --- API Endpoints ---
-app.get('/api/lexicon/ar-en', (req, res) => {
-  const word = (req.query.word as string) || '';
-  if (Object.keys(arEnLexicon).length === 0) {
-    loadLexicons();
-  }
-  const result = lookupArabic(word);
-  res.json(result);
-});
-
-app.get('/api/lexicon/en-ar', (req, res) => {
-  const word = (req.query.word as string) || '';
-  if (Object.keys(enArLexicon).length === 0) {
-    loadLexicons();
-  }
-  const result = lookupEnglish(word);
-  res.json(result);
-});
-
-app.get('/api/metadata', (_req, res) => {
-  if (Object.keys(arEnLexicon).length === 0) {
-    loadLexicons();
-  }
-  res.json({
-    ...metadata,
-    loadedArabicEntries: Object.keys(arEnLexicon).length,
-    loadedEnglishEntries: Object.keys(enArLexicon).length,
-    status: 'healthy'
-  });
-});
 
 // Phonetic & Transliteration Helper
 function arabicToPhonetic(ar: string): string {

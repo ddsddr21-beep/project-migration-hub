@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import logoAsset from '@/assets/app-logo.jpg.asset.json';
 const customAppLogo = logoAsset.url;

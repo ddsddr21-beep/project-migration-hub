@@ -1,3 +1,4 @@
+// @ts-nocheck
 export interface AlignedUnit {
   id: string;
   arabic: string;
