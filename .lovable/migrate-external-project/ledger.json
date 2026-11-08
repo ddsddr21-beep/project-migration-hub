@@ -2,6 +2,6 @@
  {"capability":"code/UI","source":"React SPA","outcome":"migrate","status":"done","next_action":null},
  {"capability":"local data (IndexedDB books, saved words, backups)","source":"browser","outcome":"keep","status":"done","next_action":null},
  {"capability":"dictionary lookups","source":"Express /api/lexicon","outcome":"server routes + asset-hosted lexicons","status":"done","next_action":null},
- {"capability":"AI contextual translation","source":"Gemini","outcome":"preserved, optional GEMINI_API_KEY; local engine fallback","status":"pending","next_action":"add GEMINI_API_KEY to enable Gemini"},
+ {"capability":"AI contextual translation","source":"Gemini","outcome":"removed at user request; local engine only","status":"done","next_action":null},
  {"capability":"auth/database","source":"none","outcome":"n/a","status":"done","next_action":null}
 ]
