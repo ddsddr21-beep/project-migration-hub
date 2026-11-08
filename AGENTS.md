@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- The reader UI is a client-only app (IndexedDB) mounted from src/routes/index.tsx via ClientOnly + lazy; keep it out of SSR because it touches window/IndexedDB.
+- Large lexicon JSON files live as lovable-assets pointers and are fetched + cached by src/lib/lexicon.server.ts; repo files must stay under 10 MB.

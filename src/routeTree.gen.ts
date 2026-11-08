@@ -10,33 +10,76 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiAiContextTranslationRouteImport } from './routes/api/ai/context-translation'
+import { Route as ApiLexiconArEnRouteImport } from './routes/api/lexicon/ar-en'
+import { Route as ApiLexiconEnArRouteImport } from './routes/api/lexicon/en-ar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiContextTranslationRoute = ApiAiContextTranslationRouteImport.update({
+  id: '/api/ai/context-translation',
+  path: '/api/ai/context-translation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiLexiconArEnRoute = ApiLexiconArEnRouteImport.update({
+  id: '/api/lexicon/ar-en',
+  path: '/api/lexicon/ar-en',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiLexiconEnArRoute = ApiLexiconEnArRouteImport.update({
+  id: '/api/lexicon/en-ar',
+  path: '/api/lexicon/en-ar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/ai/context-translation': typeof ApiAiContextTranslationRoute
+  '/api/lexicon/ar-en': typeof ApiLexiconArEnRoute
+  '/api/lexicon/en-ar': typeof ApiLexiconEnArRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/ai/context-translation': typeof ApiAiContextTranslationRoute
+  '/api/lexicon/ar-en': typeof ApiLexiconArEnRoute
+  '/api/lexicon/en-ar': typeof ApiLexiconEnArRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/ai/context-translation': typeof ApiAiContextTranslationRoute
+  '/api/lexicon/ar-en': typeof ApiLexiconArEnRoute
+  '/api/lexicon/en-ar': typeof ApiLexiconEnArRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/ai/context-translation'
+    | '/api/lexicon/ar-en'
+    | '/api/lexicon/en-ar'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/ai/context-translation'
+    | '/api/lexicon/ar-en'
+    | '/api/lexicon/en-ar'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/ai/context-translation'
+    | '/api/lexicon/ar-en'
+    | '/api/lexicon/en-ar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiAiContextTranslationRoute: typeof ApiAiContextTranslationRoute
+  ApiLexiconArEnRoute: typeof ApiLexiconArEnRoute
+  ApiLexiconEnArRoute: typeof ApiLexiconEnArRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +91,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai/context-translation': {
+      id: '/api/ai/context-translation'
+      path: '/api/ai/context-translation'
+      fullPath: '/api/ai/context-translation'
+      preLoaderRoute: typeof ApiAiContextTranslationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/lexicon/ar-en': {
+      id: '/api/lexicon/ar-en'
+      path: '/api/lexicon/ar-en'
+      fullPath: '/api/lexicon/ar-en'
+      preLoaderRoute: typeof ApiLexiconArEnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/lexicon/en-ar': {
+      id: '/api/lexicon/en-ar'
+      path: '/api/lexicon/en-ar'
+      fullPath: '/api/lexicon/en-ar'
+      preLoaderRoute: typeof ApiLexiconEnArRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiAiContextTranslationRoute: ApiAiContextTranslationRoute,
+  ApiLexiconArEnRoute: ApiLexiconArEnRoute,
+  ApiLexiconEnArRoute: ApiLexiconEnArRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
