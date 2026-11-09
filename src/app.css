@@ -5161,3 +5161,68 @@ body.theme-parchment .gold-shimmer-text {
 }
 
 
+
+/* ================= TECHNICAL PRO LAYER (overrides everything above) ================= */
+body.theme-obsidian {
+  --editorial-bg: #0e0f11;
+  --editorial-surface: #131417;
+  --editorial-surface-2: #1a1c20;
+  --editorial-border: #24272c;
+  --editorial-ivory: #e8e6e1;
+  --editorial-muted: #8b8f96;
+  --editorial-violet: #c9a35c;
+  --editorial-violet-light: #e0c184;
+  --bg-input: #0b0c0e;
+  --tech-accent: #c9a35c;
+}
+body.theme-parchment { --tech-accent: #8c5828; }
+body, .header, .nav-item, .btn, input, textarea, select {
+  font-family: 'IBM Plex Sans Arabic', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+.mono, kbd, .tech-status-item.mono { font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace; letter-spacing: .04em; }
+.ambient-background, body::after { display: none !important; }
+
+@media (min-width: 900px) { .main-content { padding-bottom: 3.5rem; } }
+.header { background: var(--editorial-surface) !important; border-bottom: 1px solid var(--editorial-border) !important; box-shadow: none !important; }
+.tech-cmdk-hint { width: auto; min-width: 180px; }
+.header-brand-title { font-size: 14px; font-weight: 700; letter-spacing: 0; }
+.nav-item { font-size: 13px; padding: .55rem .7rem; border-radius: 6px; position: relative; }
+.nav-item.active { background: var(--editorial-surface-2) !important; color: var(--editorial-ivory); }
+.nav-item.active::before { content: ''; position: absolute; inset: auto 8px -1px 8px; height: 2px; background: var(--tech-accent); border-radius: 2px; }
+.nav-item.active i { color: var(--tech-accent) !important; }
+
+.tech-cmdk-hint {
+  display: flex; align-items: center; gap: .5rem; width: 100%;
+  padding: .5rem .65rem; border: 1px solid var(--editorial-border); border-radius: 6px;
+  background: var(--bg-input); color: var(--editorial-muted); font-size: 12px; cursor: pointer;
+}
+.tech-cmdk-hint:hover { border-color: var(--tech-accent); color: var(--editorial-ivory); }
+.tech-cmdk-hint kbd { margin-inline-start: auto; font-size: 10px; padding: 1px 5px; border: 1px solid var(--editorial-border); border-radius: 4px; }
+
+.btn, .paper-action-btn, .btn-start-action { border-radius: 6px !important; font-size: 13px; font-weight: 600; }
+.btn-primary, .btn-start-action { background: var(--tech-accent) !important; color: #111 !important; }
+.btn-primary:hover, .btn-start-action:hover { filter: brightness(1.08); }
+.search-box, .select, .form-input, .form-textarea, .alignment-input { border-radius: 6px !important; }
+.search-box:focus, .select:focus, .form-input:focus, .form-textarea:focus, .alignment-input:focus {
+  border-color: var(--tech-accent) !important; box-shadow: 0 0 0 3px color-mix(in oklab, var(--tech-accent) 18%, transparent) !important;
+}
+[class*="rounded-2xl"], [class*="rounded-3xl"] { border-radius: 8px !important; }
+[class*="shadow-2xl"], [class*="shadow-xl"] { box-shadow: 0 1px 0 rgba(255,255,255,.02), 0 8px 24px rgba(0,0,0,.25) !important; }
+
+.tech-statusbar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 26px; z-index: 90;
+  display: flex; align-items: center; gap: 1rem; padding: 0 .9rem;
+  background: var(--editorial-surface); border-top: 1px solid var(--editorial-border);
+  color: var(--editorial-muted); font-size: 11px;
+}
+@media (max-width: 899px) { .tech-statusbar { display: none; } }
+.tech-status-item { display: inline-flex; align-items: center; gap: .35rem; white-space: nowrap; }
+.tech-status-spacer { flex: 1; }
+.tech-dot { width: 7px; height: 7px; border-radius: 50%; background: #e0605a; }
+.tech-dot.ok { background: #4fbf7f; }
+.tech-cmdk [cmdk-item][data-selected="true"] { background: color-mix(in oklab, var(--tech-accent) 20%, transparent); }
+
+[cmdk-dialog], [role="dialog"]:has(.tech-cmdk) { background: var(--editorial-surface) !important; color: var(--editorial-ivory) !important; border: 1px solid var(--editorial-border) !important; }
+.tech-cmdk [cmdk-input] { color: var(--editorial-ivory); background: transparent; }
+.tech-cmdk [cmdk-group-heading] { color: var(--editorial-muted); font-size: 11px; padding: .5rem .75rem .25rem; }
+.tech-cmdk [cmdk-item] { padding: .5rem .75rem; border-radius: 4px; font-size: 13px; }
