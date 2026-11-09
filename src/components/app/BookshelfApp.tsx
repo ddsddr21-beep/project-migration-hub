@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import logoAsset from '@/assets/app-logo.jpg.asset.json';
+import { TechStatusBar, TechCommandPalette } from './TechChrome';
 const customAppLogo = logoAsset.url;
 import { 
   Book, 
@@ -137,7 +138,6 @@ function segmentParallelText(text: string, lang: 'ar' | 'en', delimiter: string)
   return smartSplitSentences(text, lang);
 }
 
-import { TechStatusBar, TechCommandPalette } from './TechChrome';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>(() => {
