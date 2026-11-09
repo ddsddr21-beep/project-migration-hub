@@ -137,6 +137,8 @@ function segmentParallelText(text: string, lang: 'ar' | 'en', delimiter: string)
   return smartSplitSentences(text, lang);
 }
 
+import { TechStatusBar, TechCommandPalette } from './TechChrome';
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>(() => {
     const saved = localStorage.getItem('pr_activeTab') as TabType;
@@ -1867,7 +1869,7 @@ export default function App() {
     const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
     if (diffHours < 24) {
-      return { label: `خلال ${Math.max(1, diffHours)} س`, isDue: false, color: 'text-purple-300 bg-purple-950/40 border-purple-500/20' };
+      return { label: `خلال ${Math.max(1, diffHours)} س`, isDue: false, color: 'text-amber-300 bg-amber-950/40 border-amber-500/20' };
     } else if (diffDays === 1) {
       return { label: 'غداً', isDue: false, color: 'text-blue-300 bg-blue-950/40 border-blue-500/20' };
     } else {
@@ -2257,7 +2259,7 @@ export default function App() {
                       onClick={() => setActiveBatchId(batch.id)}
                       className={`px-3 py-1 rounded-full text-xs font-serif transition-all shrink-0 flex items-center gap-1.5 ${
                         activeBatchId === batch.id
-                          ? 'bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30 ring-1 ring-purple-400'
+                          ? 'bg-amber-600 text-white font-bold shadow-md shadow-amber-600/30 ring-1 ring-amber-400'
                           : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white border border-white/5'
                       }`}
                     >
@@ -2496,7 +2498,7 @@ export default function App() {
                               setActiveBatchId(nextBatch.id);
                               window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
-                            className="btn btn-primary py-2.5 px-6 text-xs flex items-center gap-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-600 text-white font-bold shadow-lg shadow-purple-900/30 hover:scale-105 transition-all"
+                            className="btn btn-primary py-2.5 px-6 text-xs flex items-center gap-2 bg-gradient-to-r from-amber-600 via-amber-600 to-amber-600 text-white font-bold shadow-lg shadow-amber-900/30 hover:scale-105 transition-all"
                             title="الانتقال إلى الفصل التالي"
                           >
                             <span>{nextBatch.title || 'الانتقال إلى الفصل التالي'}</span>
@@ -2665,6 +2667,12 @@ export default function App() {
                 </button>
               </nav>
 
+              <button className="tech-cmdk-hint" onClick={() => window.dispatchEvent(new Event('open-cmdk'))}>
+                <i className="fa-solid fa-magnifying-glass"></i>
+                <span>بحث وأوامر</span>
+                <kbd>Ctrl K</kbd>
+              </button>
+
               {/* Header Actions */}
               <div className="header-actions">
                 {/* Theme switcher */}
@@ -2673,7 +2681,7 @@ export default function App() {
                     onClick={() => setTheme('obsidian')}
                     title="نمط العقيق الأسود"
                     className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
-                      theme === 'obsidian' ? 'bg-purple-600/40 text-purple-300' : 'text-slate-400 hover:text-white'
+                      theme === 'obsidian' ? 'bg-amber-600/40 text-amber-300' : 'text-slate-400 hover:text-white'
                     }`}
                   >
                     <i className="fa-solid fa-moon text-xs"></i>
@@ -2839,7 +2847,7 @@ export default function App() {
                         type="button"
                         onClick={() => setWorkspaceMode('new_book')}
                         className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                          workspaceMode === 'new_book' ? 'bg-purple-600 text-white' : 'text-slate-400 hover:text-white'
+                          workspaceMode === 'new_book' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-white'
                         }`}
                       >
                         كتاب جديد
@@ -2854,7 +2862,7 @@ export default function App() {
                           }
                         }}
                         className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                          workspaceMode === 'append_batch' ? 'bg-purple-600 text-white' : 'text-slate-400 hover:text-white'
+                          workspaceMode === 'append_batch' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-white'
                         }`}
                       >
                         إضافة لكتاب سابق
@@ -2866,7 +2874,7 @@ export default function App() {
                   {workspaceMode === 'append_batch' ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="form-label text-purple-300 font-medium text-xs mb-1 block">اختر الكتاب</label>
+                        <label className="form-label text-amber-300 font-medium text-xs mb-1 block">اختر الكتاب</label>
                         <select
                           value={selectedTargetBookId}
                           onChange={(e) => setSelectedTargetBookId(e.target.value)}
@@ -2885,7 +2893,7 @@ export default function App() {
                       </div>
 
                       <div>
-                        <label className="form-label text-purple-300 font-medium text-xs mb-1 block">عنوان الدفعة الجديدة</label>
+                        <label className="form-label text-amber-300 font-medium text-xs mb-1 block">عنوان الدفعة الجديدة</label>
                         <input
                           type="text"
                           value={newBatchTitle}
@@ -2966,7 +2974,7 @@ export default function App() {
                           type="button"
                           onClick={() => setCustomDelimiter('')}
                           className={`px-2.5 py-1 rounded-md text-xs transition-all ${
-                            !customDelimiter ? 'bg-purple-700 text-white font-bold' : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                            !customDelimiter ? 'bg-amber-700 text-white font-bold' : 'bg-white/5 text-slate-400 hover:bg-white/10'
                           }`}
                         >
                           تلقائي
@@ -3032,7 +3040,7 @@ export default function App() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <button
                       onClick={() => setShowAddWordModal(true)}
-                      className="btn btn-secondary text-purple-300 hover:text-white"
+                      className="btn btn-secondary text-amber-300 hover:text-white"
                       title="إضافة مفردة جديدة يدوياً"
                     >
                       <i className="fa-solid fa-plus"></i>
@@ -3043,7 +3051,7 @@ export default function App() {
                       <>
                         <button
                           onClick={() => startReviewSession('flashcard')}
-                          className="btn btn-primary shadow-lg shadow-purple-950/40"
+                          className="btn btn-primary shadow-lg shadow-amber-950/40"
                           title="مراجعة المفردات بنظام التكرار المتباعد"
                         >
                           <i className="fa-solid fa-layer-group"></i>
@@ -3066,7 +3074,7 @@ export default function App() {
 
                         <button
                           onClick={() => startReviewSession('quiz')}
-                          className="btn btn-secondary text-violet-300 hover:text-white"
+                          className="btn btn-secondary text-amber-300 hover:text-white"
                           title="اختبار التسميع السريع بالاختيار من متعدد"
                         >
                           <i className="fa-solid fa-list-check"></i>
@@ -3075,7 +3083,7 @@ export default function App() {
 
                         <button
                           onClick={() => startReviewSession('recall')}
-                          className="btn btn-secondary text-violet-300 hover:text-white"
+                          className="btn btn-secondary text-amber-300 hover:text-white"
                           title="اختبار الإملاء والكتابة"
                         >
                           <i className="fa-solid fa-keyboard"></i>
@@ -3089,7 +3097,7 @@ export default function App() {
                 {/* Vocabulary Tools Bar */}
                 <div className="flex items-center justify-between flex-wrap gap-2 p-2.5 rounded-2xl bg-[var(--editorial-surface-2)] border border-[var(--editorial-border)] text-xs text-[var(--editorial-muted)] notebook-tools">
                   <div className="flex items-center gap-2">
-                    <i className="fa-solid fa-toolbox text-purple-400"></i>
+                    <i className="fa-solid fa-toolbox text-amber-400"></i>
                   </div>
 
                   <div className="flex items-center gap-2 flex-wrap">
@@ -3098,7 +3106,7 @@ export default function App() {
                       className="hover:text-[var(--editorial-ivory)] transition-colors flex items-center gap-1 bg-white/5 py-1 px-2.5 rounded-lg border border-white/5"
                       title="تصدير جميع المفردات كملف JSON للنسخ الاحتياطي"
                     >
-                      <i className="fa-solid fa-download text-purple-300"></i>
+                      <i className="fa-solid fa-download text-amber-300"></i>
                       <span>تصدير (Backup)</span>
                     </button>
 
@@ -3106,7 +3114,7 @@ export default function App() {
                       className="hover:text-[var(--editorial-ivory)] transition-colors flex items-center gap-1 bg-white/5 py-1 px-2.5 rounded-lg border border-white/5 cursor-pointer"
                       title="استيراد مفردات من ملف JSON"
                     >
-                      <i className="fa-solid fa-file-import text-purple-300"></i>
+                      <i className="fa-solid fa-file-import text-amber-300"></i>
                       <span>استيراد</span>
                       <input
                         type="file"
@@ -3160,14 +3168,14 @@ export default function App() {
                     <div 
                       onClick={() => setVocabFilter('learning')}
                       className={`interleaved-card p-3 text-center cursor-pointer transition-all ${
-                        vocabFilter === 'learning' ? 'border-purple-500/50 bg-purple-950/20 ring-1 ring-purple-500/30' : 'hover:border-purple-500/30'
+                        vocabFilter === 'learning' ? 'border-amber-500/50 bg-amber-950/20 ring-1 ring-amber-500/30' : 'hover:border-amber-500/30'
                       }`}
                     >
-                      <div className="text-xs text-purple-300/90 mb-1 flex items-center justify-center gap-1">
+                      <div className="text-xs text-amber-300/90 mb-1 flex items-center justify-center gap-1">
                         <i className="fa-solid fa-seedling text-xs"></i>
                         <span>قيد التعلّم</span>
                       </div>
-                      <div className="text-xl font-bold font-serif text-purple-300">{learningWords.length}</div>
+                      <div className="text-xl font-bold font-serif text-amber-300">{learningWords.length}</div>
                     </div>
 
                     <div 
@@ -3240,7 +3248,7 @@ export default function App() {
                 {/* Empty State or Cards Grid */}
                 {savedWords.length === 0 ? (
                   <div className="interleaved-card text-center py-16 space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-purple-900/30 border border-purple-500/30 flex items-center justify-center mx-auto text-purple-300 text-2xl shadow-lg shadow-purple-950/50">
+                    <div className="w-16 h-16 rounded-full bg-amber-900/30 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-300 text-2xl shadow-lg shadow-amber-950/50">
                       <i className="fa-solid fa-bookmark"></i>
                     </div>
                     <div>
@@ -3276,13 +3284,13 @@ export default function App() {
                               <div>
                                 <div className="flex items-center gap-2 flex-wrap">
                                   <h4 className="text-xl font-bold font-serif text-[var(--editorial-ivory)] tracking-wide">{item.word}</h4>
-                                  <span className="text-[10px] text-purple-300/80 bg-purple-950/60 border border-purple-500/30 px-1.5 py-0.5 rounded">
+                                  <span className="text-[10px] text-amber-300/80 bg-amber-950/60 border border-amber-500/30 px-1.5 py-0.5 rounded">
                                     {item.direction === 'ar-en' ? 'عربي ➔ E' : 'English ➔ ع'}
                                   </span>
                                 </div>
                                 {item.bookTitle && (
                                   <span className="text-[11px] text-slate-500 line-clamp-1 mt-0.5 flex items-center gap-1">
-                                    <i className="fa-solid fa-book-open text-[10px] text-purple-400"></i>
+                                    <i className="fa-solid fa-book-open text-[10px] text-amber-400"></i>
                                     <span>{item.bookTitle}</span>
                                   </span>
                                 )}
@@ -3296,7 +3304,7 @@ export default function App() {
                                 <div className="vocab-actions-popover">
                                 <button
                                   onClick={() => handleOpenEditWordModal(item)}
-                                  className="btn btn-ghost py-1 px-2 text-xs text-slate-400 hover:text-purple-300"
+                                  className="btn btn-ghost py-1 px-2 text-xs text-slate-400 hover:text-amber-300"
                                   title="تعديل الملاحظات والمعاني"
                                 >
                                   <i className="fa-solid fa-pen-to-square"></i>
@@ -3327,7 +3335,7 @@ export default function App() {
                             <div className="pt-2 pb-2.5 border-t border-white/5">
                               <div className="flex flex-wrap gap-1.5">
                                 {item.meanings.map((m, i) => (
-                                  <span key={i} className="btn btn-secondary py-0.5 px-2.5 text-xs text-violet-200">
+                                  <span key={i} className="btn btn-secondary py-0.5 px-2.5 text-xs text-amber-200">
                                     {m}
                                   </span>
                                 ))}
@@ -3389,7 +3397,7 @@ export default function App() {
 
                             <button
                               onClick={() => startReviewSession('flashcard', [item])}
-                              className="text-purple-300 hover:text-white text-xs flex items-center gap-1 py-1 px-2.5 rounded-lg hover:bg-purple-900/30 transition-all border border-purple-500/20 shadow-sm"
+                              className="text-amber-300 hover:text-white text-xs flex items-center gap-1 py-1 px-2.5 rounded-lg hover:bg-amber-900/30 transition-all border border-amber-500/20 shadow-sm"
                             >
                               <i className="fa-solid fa-play text-[10px]"></i>
                               <span>مراجعة المفردة</span>
@@ -3428,7 +3436,7 @@ export default function App() {
                       className="btn btn-secondary py-1.5 px-3 text-xs flex items-center gap-1.5 cursor-pointer"
                       title="استعادة نسخة من ملف JSON"
                     >
-                      <i className="fa-solid fa-upload text-purple-300"></i>
+                      <i className="fa-solid fa-upload text-amber-300"></i>
                       <span>استعادة</span>
                       <input
                         type="file"
@@ -3464,7 +3472,7 @@ export default function App() {
                 {/* Books Grid & Empty State */}
                 {filteredBooks.length === 0 ? (
                   <div className="interleaved-card text-center py-16 space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-purple-900/30 border border-purple-500/30 flex items-center justify-center mx-auto text-purple-300 text-2xl">
+                    <div className="w-16 h-16 rounded-full bg-amber-900/30 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-300 text-2xl">
                       <i className="fa-solid fa-book-open"></i>
                     </div>
                     <h3 className="text-lg font-bold text-[var(--editorial-ivory)] font-serif">المكتبة فارغة</h3>
@@ -3548,7 +3556,7 @@ export default function App() {
                                   className="btn btn-secondary text-xs py-2"
                                   title="إدارة الدفعات وتعديل البيانات"
                                 >
-                                  <i className="fa-solid fa-layer-group text-purple-400 ml-1"></i>
+                                  <i className="fa-solid fa-layer-group text-amber-400 ml-1"></i>
                                   <span>خيارات الكتاب</span>
                                 </button>
                               </div>
@@ -3631,9 +3639,9 @@ export default function App() {
                                           e.stopPropagation();
                                           handleOpenBatchesModal(book);
                                         }}
-                                        className="btn btn-ghost text-purple-200 hover:text-white hover:bg-white/10 w-full text-right py-1.5 px-3 text-xs"
+                                        className="btn btn-ghost text-amber-200 hover:text-white hover:bg-white/10 w-full text-right py-1.5 px-3 text-xs"
                                       >
-                                        <i className="fa-solid fa-layer-group ml-1.5 text-xs text-purple-400"></i>
+                                        <i className="fa-solid fa-layer-group ml-1.5 text-xs text-amber-400"></i>
                                         <span>إدارة دفعات النصوص</span>
                                       </button>
 
@@ -3702,6 +3710,18 @@ export default function App() {
 
           </main>
 
+          <TechStatusBar
+            tab={activeTab}
+            books={books.length}
+            words={savedWords.length}
+            theme={theme}
+          />
+          <TechCommandPalette
+            books={books.map((b: any) => ({ id: String(b.id), title: String(b.title ?? b.name ?? 'كتاب') }))}
+            onTab={setActiveTab}
+            onTheme={(t) => setTheme(t as ReadingTheme)}
+          />
+
           {/* ================= MOBILE BOTTOM NAVIGATION ================= */}
           <nav className="mobile-bottom-nav">
             <div className="mobile-nav-grid">
@@ -3768,7 +3788,7 @@ export default function App() {
                         ...selectedWord.meanings
                       ].filter(Boolean).join(', ')
                     )}
-                    className="btn btn-ghost py-1 px-2 text-xs text-purple-300 hover:text-white"
+                    className="btn btn-ghost py-1 px-2 text-xs text-amber-300 hover:text-white"
                     title="نسخ الترجمة"
                   >
                     <i className={`fa-solid ${copyFeedback ? 'fa-check text-emerald-400' : 'fa-copy'}`}></i>
@@ -3809,7 +3829,7 @@ export default function App() {
                     <span>الترجمة المباشرة (المعجم المحلي):</span>
                   </span>
                   {selectedWord.direction && (
-                    <span className="text-[10px] text-purple-300 bg-purple-950/60 border border-purple-500/20 px-2 py-0.5 rounded">
+                    <span className="text-[10px] text-amber-300 bg-amber-950/60 border border-amber-500/20 px-2 py-0.5 rounded">
                       {selectedWord.direction === 'ar-en' ? 'عربي ➔ إنجليزي' : 'إنجليزي ➔ عربي'}
                     </span>
                   )}
@@ -3843,7 +3863,7 @@ export default function App() {
               {selectedWord.examples && selectedWord.examples.length > 0 && (
                 <div className="space-y-2 pt-2 border-t border-white/5">
                   <div className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                    <i className="fa-solid fa-quote-right text-purple-400 text-xs"></i>
+                    <i className="fa-solid fa-quote-right text-amber-400 text-xs"></i>
                     <span>جمل وتطبيقات سياقية:</span>
                   </div>
                   <div className="space-y-2">
@@ -3865,7 +3885,7 @@ export default function App() {
               {(selectedWord.aiExactMatch || selectedWord.aiLoading) && (
                 <div className="ai-translation-box rounded-xl p-2.5 bg-black/20 border border-white/10 space-y-1.5">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="ai-tag-badge bg-gradient-to-r from-purple-900/80 via-indigo-900/80 to-purple-900/80 border border-amber-400/25 text-amber-100 flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[11px] font-medium">
+                    <span className="ai-tag-badge bg-gradient-to-r from-amber-900/80 via-amber-900/80 to-amber-900/80 border border-amber-400/25 text-amber-100 flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[11px] font-medium">
                       <i className="fa-solid fa-wand-magic-sparkles text-[10px] text-amber-300"></i>
                       <span>المطابقة في النص المقابل</span>
                     </span>
@@ -3898,7 +3918,7 @@ export default function App() {
             {/* Modal Header */}
             <div className="modal-header">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-300">
+                <div className="w-8 h-8 rounded-lg bg-amber-900/40 border border-amber-500/30 flex items-center justify-center text-amber-300">
                   <i className="fa-solid fa-graduation-cap text-sm"></i>
                 </div>
                 <div>
@@ -3919,7 +3939,7 @@ export default function App() {
                       setIsFlipped(false);
                     }}
                     className={`py-1 px-2.5 rounded-lg transition-all ${
-                      reviewMode === 'flashcard' ? 'bg-purple-600 text-white font-bold' : 'text-slate-400 hover:text-white'
+                      reviewMode === 'flashcard' ? 'bg-amber-600 text-white font-bold' : 'text-slate-400 hover:text-white'
                     }`}
                     title="نمط البطاقات الذكية"
                   >
@@ -3949,7 +3969,7 @@ export default function App() {
                       }
                     }}
                     className={`py-1 px-2.5 rounded-lg transition-all ${
-                      reviewMode === 'quiz' ? 'bg-purple-600 text-white font-bold' : 'text-slate-400 hover:text-white'
+                      reviewMode === 'quiz' ? 'bg-amber-600 text-white font-bold' : 'text-slate-400 hover:text-white'
                     }`}
                     title="اختبار التسميع السريع"
                   >
@@ -3966,7 +3986,7 @@ export default function App() {
                       setRecallShowHint(false);
                     }}
                     className={`py-1 px-2.5 rounded-lg transition-all ${
-                      reviewMode === 'recall' ? 'bg-purple-600 text-white font-bold' : 'text-slate-400 hover:text-white'
+                      reviewMode === 'recall' ? 'bg-amber-600 text-white font-bold' : 'text-slate-400 hover:text-white'
                     }`}
                     title="اختبار الكتابة والإملاء"
                   >
@@ -3989,7 +4009,7 @@ export default function App() {
             {!reviewStats.completed && (
               <div className="w-full bg-black/30 h-1.5 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-purple-500 to-indigo-400 h-full transition-all duration-300"
+                  className="bg-gradient-to-r from-amber-500 to-amber-400 h-full transition-all duration-300"
                   style={{ width: `${Math.round(((reviewIndex) / reviewQueue.length) * 100)}%` }}
                 ></div>
               </div>
@@ -4031,10 +4051,10 @@ export default function App() {
                     const totalEvaluated = reviewStats.good + reviewStats.hard + reviewStats.again;
                     const accuracy = totalEvaluated > 0 ? Math.round(((reviewStats.good + reviewStats.hard * 0.5) / totalEvaluated) * 100) : 100;
                     return (
-                      <div className="bg-gradient-to-r from-purple-950/40 via-purple-900/20 to-purple-950/40 border border-purple-500/30 p-3 rounded-2xl max-w-sm mx-auto flex items-center justify-between shadow-lg shadow-purple-950/30">
+                      <div className="bg-gradient-to-r from-amber-950/40 via-amber-900/20 to-amber-950/40 border border-amber-500/30 p-3 rounded-2xl max-w-sm mx-auto flex items-center justify-between shadow-lg shadow-amber-950/30">
                         <div className="text-right">
-                          <div className="text-xs text-purple-300 font-semibold flex items-center gap-1.5">
-                            <i className="fa-solid fa-brain text-purple-400"></i>
+                          <div className="text-xs text-amber-300 font-semibold flex items-center gap-1.5">
+                            <i className="fa-solid fa-brain text-amber-400"></i>
                             <span>مؤشر استقرار الذاكرة SM-2:</span>
                           </div>
                         </div>
@@ -4078,7 +4098,7 @@ export default function App() {
                       const isSelected = selectedMatching.includes(card.id);
                       const isError = matchingErrorIds.includes(card.id);
 
-                      let cardStyle = 'bg-[var(--editorial-surface-2)] border-[var(--editorial-border)] hover:border-purple-500/50 text-[var(--text-primary)]';
+                      let cardStyle = 'bg-[var(--editorial-surface-2)] border-[var(--editorial-border)] hover:border-amber-500/50 text-[var(--text-primary)]';
                       if (isMatched) {
                         cardStyle = 'bg-emerald-950/40 border-emerald-500/50 text-emerald-400 opacity-60 cursor-default scale-95';
                       } else if (isSelected) {
@@ -4125,7 +4145,7 @@ export default function App() {
                     <div className="study-flip-inner">
                       {/* FRONT OF CARD */}
                       <div className="study-card-front">
-                        <div className="text-xs text-purple-300 font-semibold mb-2">
+                        <div className="text-xs text-amber-300 font-semibold mb-2">
                           {reviewQueue[reviewIndex]?.direction === 'ar-en' ? 'نص عربي' : 'English Term'}
                         </div>
                         <h3 className="text-3xl font-bold font-serif text-[var(--editorial-ivory)] mb-2">
@@ -4150,7 +4170,7 @@ export default function App() {
                         </h3>
                         <div className="flex flex-wrap gap-2 justify-center mb-4">
                           {reviewQueue[reviewIndex]?.meanings.map((m, idx) => (
-                            <span key={idx} className="btn btn-secondary py-1 px-3 text-base text-violet-200">
+                            <span key={idx} className="btn btn-secondary py-1 px-3 text-base text-amber-200">
                               {m}
                             </span>
                           ))}
@@ -4204,8 +4224,8 @@ export default function App() {
                 /* MODE 2: MULTIPLE CHOICE QUIZ */
                 <div className="space-y-4">
                   {/* Prompt Card */}
-                  <div className="interleaved-card text-center p-6 space-y-2 border-purple-500/30">
-                    <div className="text-xs text-purple-300 font-semibold">ما هو المعنى الصحيح لهذه المفردة؟</div>
+                  <div className="interleaved-card text-center p-6 space-y-2 border-amber-500/30">
+                    <div className="text-xs text-amber-300 font-semibold">ما هو المعنى الصحيح لهذه المفردة؟</div>
                     <h3 className="text-3xl font-bold font-serif text-[var(--editorial-ivory)]">
                       {reviewQueue[reviewIndex]?.word}
                     </h3>
@@ -4279,11 +4299,11 @@ export default function App() {
               ) : (
                 /* MODE 3: ACTIVE RECALL / SPELLING */
                 <div className="space-y-4">
-                  <div className="interleaved-card text-center p-6 space-y-2 border-purple-500/30">
-                    <div className="text-xs text-purple-300 font-semibold">اكتب الكلمة المقابلة لهذا المعنى:</div>
+                  <div className="interleaved-card text-center p-6 space-y-2 border-amber-500/30">
+                    <div className="text-xs text-amber-300 font-semibold">اكتب الكلمة المقابلة لهذا المعنى:</div>
                     <div className="flex flex-wrap gap-2 justify-center py-2">
                       {reviewQueue[reviewIndex]?.meanings.map((m, idx) => (
-                        <span key={idx} className="btn btn-secondary py-1 px-3 text-lg font-serif text-violet-200">
+                        <span key={idx} className="btn btn-secondary py-1 px-3 text-lg font-serif text-amber-200">
                           {m}
                         </span>
                       ))}
@@ -4392,7 +4412,7 @@ export default function App() {
           <div className="modal-card max-w-md" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <div className="flex items-center gap-2">
-                <i className="fa-solid fa-plus-circle text-purple-400"></i>
+                <i className="fa-solid fa-plus-circle text-amber-400"></i>
                 <h2 className="text-base font-bold font-serif text-[var(--editorial-ivory)]">إضافة مفردة جديدة</h2>
               </div>
               <button onClick={() => setShowAddWordModal(false)} className="modal-close" title="إغلاق">
@@ -4475,7 +4495,7 @@ export default function App() {
           <div className="modal-card max-w-md" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <div className="flex items-center gap-2">
-                <i className="fa-solid fa-pen-to-square text-purple-400"></i>
+                <i className="fa-solid fa-pen-to-square text-amber-400"></i>
                 <h2 className="text-base font-bold font-serif text-[var(--editorial-ivory)]">تعديل: {editingWord.word}</h2>
               </div>
               <button onClick={() => setShowEditWordModal(false)} className="modal-close" title="إغلاق">
@@ -4524,7 +4544,7 @@ export default function App() {
           <div className="modal-card max-w-lg" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <div className="flex items-center gap-2">
-                <i className="fa-solid fa-sliders text-purple-400"></i>
+                <i className="fa-solid fa-sliders text-amber-400"></i>
                 <h2 className="text-base font-bold font-serif text-[var(--editorial-ivory)]">إعدادات القراءة</h2>
               </div>
               <button onClick={() => setShowSettings(false)} className="modal-close" title="إغلاق">
@@ -4596,8 +4616,8 @@ export default function App() {
                     onClick={() => setTheme('obsidian')}
                     className={`btn text-xs py-2 px-3 border transition-all ${
                       theme === 'obsidian'
-                        ? 'border-purple-600 bg-purple-900/30 text-purple-200 ring-2 ring-purple-500/40'
-                        : 'border-white/10 bg-black/20 text-slate-300 hover:border-purple-500/40'
+                        ? 'border-amber-600 bg-amber-900/30 text-amber-200 ring-2 ring-amber-500/40'
+                        : 'border-white/10 bg-black/20 text-slate-300 hover:border-amber-500/40'
                     }`}
                   >
                     <i className="fa-solid fa-moon text-sm"></i>
@@ -4633,7 +4653,7 @@ export default function App() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <label className="form-label text-sm font-semibold">حجم الخط</label>
-                  <span className="text-purple-300 font-mono text-sm">{fontSize}px</span>
+                  <span className="text-amber-300 font-mono text-sm">{fontSize}px</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <button 
@@ -4755,10 +4775,10 @@ export default function App() {
 
               {/* Language Selection for Single Text Mode (Focus Mode) */}
               {layoutMode === 'focus' && (
-                <div className="space-y-2 p-3 rounded-xl bg-purple-950/20 border border-purple-500/30">
+                <div className="space-y-2 p-3 rounded-xl bg-amber-950/20 border border-amber-500/30">
                   <div className="flex items-center justify-between">
-                    <label className="form-label text-sm font-semibold text-purple-200">لغة النص الظاهر (نمط النص المنفرد)</label>
-                    <span className="text-xs text-purple-300 font-mono">
+                    <label className="form-label text-sm font-semibold text-amber-200">لغة النص الظاهر (نمط النص المنفرد)</label>
+                    <span className="text-xs text-amber-300 font-mono">
                       {focusLanguage === 'ar' ? 'العربية' : 'English'}
                     </span>
                   </div>
@@ -4891,7 +4911,7 @@ export default function App() {
 
               {/* Cover Image Customization Section */}
               <div className="space-y-3 pt-2 border-t border-white/10">
-                <label className="form-label text-purple-300 font-bold flex items-center justify-between">
+                <label className="form-label text-amber-300 font-bold flex items-center justify-between">
                   <span>صورة غلاف الكتاب (جودة عالية)</span>
                   {editCoverImage && (
                     <button
@@ -4925,8 +4945,8 @@ export default function App() {
                   <div className="flex-1 space-y-2.5 w-full">
                     {/* File Upload Button */}
                     <div className="relative">
-                      <label className="btn btn-secondary text-xs w-full cursor-pointer flex items-center justify-center gap-2 py-2.5 border-purple-500/30 hover:border-purple-400">
-                        <i className="fa-solid fa-upload text-purple-400"></i>
+                      <label className="btn btn-secondary text-xs w-full cursor-pointer flex items-center justify-center gap-2 py-2.5 border-amber-500/30 hover:border-amber-400">
+                        <i className="fa-solid fa-upload text-amber-400"></i>
                         <span>رفع صورة الغلاف</span>
                         <input
                           type="file"
@@ -4972,7 +4992,7 @@ export default function App() {
             <div className="modal-header flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">
-                  <i className="fa-solid fa-layer-group text-purple-400"></i>
+                  <i className="fa-solid fa-layer-group text-amber-400"></i>
                   <h2 className="text-base sm:text-lg font-bold font-serif text-[var(--editorial-ivory)]">
                     فصول ودفعات الكتاب: {selectedBookForBatches.title}
                   </h2>
@@ -4995,7 +5015,7 @@ export default function App() {
                   </span>
                   <span className="text-[var(--editorial-muted)]">|</span>
                   <span className="text-[var(--text-secondary)]">
-                    إجمالي الفقرات: <strong className="text-purple-300 font-mono text-sm">{getBookAllRowsSorted(selectedBookForBatches).length}</strong>
+                    إجمالي الفقرات: <strong className="text-amber-300 font-mono text-sm">{getBookAllRowsSorted(selectedBookForBatches).length}</strong>
                   </span>
                 </div>
 
@@ -5103,7 +5123,7 @@ export default function App() {
 
                             {/* English Preview */}
                             <div className="batch-excerpt-box en" dir="ltr">
-                              <div className="text-[10px] font-semibold text-purple-500 dark:text-purple-300 flex items-center gap-1.5 font-mono mb-1.5" dir="ltr">
+                              <div className="text-[10px] font-semibold text-amber-500 dark:text-amber-300 flex items-center gap-1.5 font-mono mb-1.5" dir="ltr">
                                 <i className="fa-solid fa-quote-left text-[10px]"></i>
                                 <span>Parallel English Excerpt:</span>
                               </div>
