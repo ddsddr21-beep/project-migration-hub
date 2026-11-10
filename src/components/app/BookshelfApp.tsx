@@ -2667,6 +2667,12 @@ export default function App() {
                 </button>
               </nav>
 
+              <div className="tech-topstats mono" aria-label="مؤشرات">
+                <span><i className="fa-solid fa-book" /> {books.length}</span>
+                <span><i className="fa-solid fa-bookmark" /> {savedWords.length}</span>
+                <span className="tech-saved"><span className="tech-dot ok" /> محفوظ محلياً</span>
+              </div>
+
               <button className="tech-cmdk-hint" onClick={() => window.dispatchEvent(new Event('open-cmdk'))}>
                 <i className="fa-solid fa-magnifying-glass"></i>
                 <span>بحث وأوامر</span>
@@ -3710,12 +3716,36 @@ export default function App() {
 
           </main>
 
-          <TechStatusBar
-            tab={activeTab}
-            books={books.length}
-            words={savedWords.length}
-            theme={theme}
-          />
+          <nav className="tech-activitybar" aria-label="شريط الأنشطة">
+            {([
+              ['workspace', 'fa-pen-to-square', 'إعداد النصوص'],
+              ['library', 'fa-folder-tree', 'المكتبة'],
+              ['notebook', 'fa-bookmark', 'المفردات'],
+            ] as const).map(([t, icon, label]) => (
+              <button
+                key={t}
+                title={label}
+                aria-label={label}
+                onClick={() => setActiveTab(t)}
+                className={`tech-act-btn ${activeTab === t ? 'active' : ''}`}
+              >
+                <i className={`fa-solid ${icon}`} />
+                {t === 'notebook' && savedWords.length > 0 && <span className="tech-act-badge">{savedWords.length}</span>}
+              </button>
+            ))}
+            <span className="tech-act-spacer" />
+            <button title="بحث وأوامر (Ctrl+K)" aria-label="بحث وأوامر" className="tech-act-btn" onClick={() => window.dispatchEvent(new Event('open-cmdk'))}>
+              <i className="fa-solid fa-magnifying-glass" />
+            </button>
+            <button
+              title="تبديل المظهر"
+              aria-label="تبديل المظهر"
+              className="tech-act-btn"
+              onClick={() => setTheme(theme === 'parchment' ? 'obsidian' : 'parchment')}
+            >
+              <i className={`fa-solid ${theme === 'parchment' ? 'fa-moon' : 'fa-sun'}`} />
+            </button>
+          </nav>
           <TechCommandPalette
             books={books.map((b: any) => ({ id: String(b.id), title: String(b.title ?? b.name ?? 'كتاب') }))}
             onTab={setActiveTab}
