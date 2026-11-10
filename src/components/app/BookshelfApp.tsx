@@ -149,6 +149,7 @@ export default function App() {
   });
   const [books, setBooks] = useState<Book[]>([]);
   const [currentBook, setCurrentBook] = useState<Book | null>(null);
+  const [explorerOpen, setExplorerOpen] = useState(false);
   const [activeRowId, setActiveRowId] = useState<string | null>(null);
   const [layoutMode, setLayoutMode] = useState<ReaderLayoutMode>(() => {
     return (localStorage.getItem('pr_layoutMode') as ReaderLayoutMode) || 'interleaved';
@@ -3733,6 +3734,9 @@ export default function App() {
                 {t === 'notebook' && savedWords.length > 0 && <span className="tech-act-badge">{savedWords.length}</span>}
               </button>
             ))}
+            <button title="مستكشف الكتب" aria-label="مستكشف الكتب" className={`tech-act-btn ${explorerOpen ? 'active' : ''}`} onClick={() => setExplorerOpen((o) => !o)}>
+              <i className="fa-solid fa-book-open" />
+            </button>
             <span className="tech-act-spacer" />
             <button title="بحث وأوامر (Ctrl+K)" aria-label="بحث وأوامر" className="tech-act-btn" onClick={() => window.dispatchEvent(new Event('open-cmdk'))}>
               <i className="fa-solid fa-magnifying-glass" />
@@ -3746,7 +3750,24 @@ export default function App() {
               <i className={`fa-solid ${theme === 'parchment' ? 'fa-moon' : 'fa-sun'}`} />
             </button>
           </nav>
+          {explorerOpen && (
+            <aside className="tech-explorer" aria-label="مستكشف الكتب">
+              <div className="tech-explorer-head mono">EXPLORER <span>{books.length}</span></div>
+              {books.length === 0 && <p className="tech-explorer-empty">لا توجد كتب بعد. الصق نصاً في «إعداد النصوص».</p>}
+              {books.map((b: any) => (
+                <button
+                  key={b.id}
+                  className={`tech-explorer-item ${currentBook?.id === b.id ? 'active' : ''}`}
+                  onClick={() => { openBookForReading(b); setExplorerOpen(false); }}
+                >
+                  <i className="fa-regular fa-file-lines" />
+                  <span>{b.title || 'بدون عنوان'}</span>
+                </button>
+              ))}
+            </aside>
+          )}
           <TechCommandPalette
+            onOpenBook={(id) => { const b = books.find((x: any) => String(x.id) === id); if (b) openBookForReading(b); }}
             books={books.map((b: any) => ({ id: String(b.id), title: String(b.title ?? b.name ?? 'كتاب') }))}
             onTab={setActiveTab}
             onTheme={(t) => setTheme(t as ReadingTheme)}
