@@ -5249,3 +5249,4 @@ body, .header, .nav-item, .btn, input, textarea, select {
 @media (max-width:1023px){.tech-topstats{display:none}}
 body.theme-parchment .tech-activitybar{background:#efe9dc;border-left-color:rgba(0,0,0,.08)}
 body.theme-parchment .tech-act-btn{color:#7a6f5c}
+html,body{overflow-x:hidden;max-width:100%}
