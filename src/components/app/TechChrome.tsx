@@ -46,10 +46,12 @@ export function TechCommandPalette({
   books,
   onTab,
   onTheme,
+  onOpenBook,
 }: {
   books: { id: string; title: string }[];
   onTab: (t: Tab) => void;
   onTheme: (t: string) => void;
+  onOpenBook?: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -85,7 +87,7 @@ export function TechCommandPalette({
           {books.length > 0 && (
             <CommandGroup heading="الكتب">
               {books.slice(0, 30).map((b) => (
-                <CommandItem key={b.id} onSelect={() => run(() => onTab('library'))}>{b.title}</CommandItem>
+                <CommandItem key={b.id} onSelect={() => run(() => (onOpenBook ? onOpenBook(b.id) : onTab('library')))}>{b.title}</CommandItem>
               ))}
             </CommandGroup>
           )}
