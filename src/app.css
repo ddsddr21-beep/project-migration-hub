@@ -5226,3 +5226,28 @@ body, .header, .nav-item, .btn, input, textarea, select {
 .tech-cmdk [cmdk-input] { color: var(--editorial-ivory); background: transparent; }
 .tech-cmdk [cmdk-group-heading] { color: var(--editorial-muted); font-size: 11px; padding: .5rem .75rem .25rem; }
 .tech-cmdk [cmdk-item] { padding: .5rem .75rem; border-radius: 4px; font-size: 13px; }
+
+/* ===== IDE SHELL: activity bar + merged top-bar indicators ===== */
+.tech-statusbar{display:none!important}
+.tech-topstats{display:flex;align-items:center;gap:14px;font-size:11px;color:var(--text-muted,#8a8d93);font-family:'JetBrains Mono',ui-monospace,monospace;white-space:nowrap}
+.tech-topstats i{color:#c9a35c;margin-inline-end:4px}
+.tech-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#6b7280;margin-inline-end:5px;vertical-align:middle}
+.tech-dot.ok{background:#4ade80}
+.tech-activitybar{display:none}
+@media (min-width:1024px){
+  .tech-activitybar{display:flex;flex-direction:column;align-items:center;gap:4px;position:fixed;top:0;bottom:0;right:0;width:52px;padding:64px 0 12px;background:#0b0c0e;border-left:1px solid rgba(255,255,255,.07);z-index:120}
+  .tech-act-btn{position:relative;width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#7d8189;font-size:16px;transition:color .15s,background .15s}
+  .tech-act-btn:hover{color:#e7e2d6;background:rgba(255,255,255,.05)}
+  .tech-act-btn.active{color:#c9a35c;background:rgba(201,163,92,.1)}
+  .tech-act-btn.active::before{content:"";position:absolute;right:-6px;top:8px;bottom:8px;width:2px;border-radius:2px;background:#c9a35c}
+  .tech-act-badge{position:absolute;top:3px;left:3px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:#c9a35c;color:#111;font-size:9px;font-weight:700;line-height:16px;font-family:'JetBrains Mono',monospace}
+  .tech-act-spacer{flex:1}
+  .header{padding-right:52px!important}
+  .main-content{margin-right:52px!important;padding-bottom:24px!important}
+  .header-nav{display:none!important}
+}
+@media (max-width:1023px){.tech-topstats{display:none}}
+body.theme-parchment .tech-activitybar{background:#efe9dc;border-left-color:rgba(0,0,0,.08)}
+body.theme-parchment .tech-act-btn{color:#7a6f5c}
+html,body{overflow-x:hidden;max-width:100%}
+@media (min-width:1024px){.main-content{width:auto!important;max-width:calc(100% - 52px)!important;box-sizing:border-box!important}.header{box-sizing:border-box!important;width:100%!important}}
