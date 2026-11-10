@@ -5250,3 +5250,4 @@ body, .header, .nav-item, .btn, input, textarea, select {
 body.theme-parchment .tech-activitybar{background:#efe9dc;border-left-color:rgba(0,0,0,.08)}
 body.theme-parchment .tech-act-btn{color:#7a6f5c}
 html,body{overflow-x:hidden;max-width:100%}
+@media (min-width:1024px){.main-content{width:auto!important;max-width:calc(100% - 52px)!important;box-sizing:border-box!important}.header{box-sizing:border-box!important;width:100%!important}}
