@@ -154,3 +154,56 @@
     color: var(--color-foreground);
   }
 }
+
+/* Reader dictionary surfaces inherit the active reading theme. */
+.word-inspector-quick, .word-inspector-panel {
+  --background: var(--editorial-surface);
+  --foreground: var(--editorial-ivory);
+  --accent: var(--editorial-surface-2);
+  --accent-foreground: var(--editorial-ivory);
+  --ring: var(--tech-accent);
+  background: var(--editorial-surface);
+  color: var(--editorial-ivory);
+  border: 1px solid var(--editorial-border);
+  font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  letter-spacing: 0;
+  z-index: 10000;
+}
+.word-inspector-quick { width: min(350px, calc(100vw - 24px)); padding: 14px; border-radius: 8px; max-height: min(420px, 70dvh); overflow-y: auto; box-shadow: var(--shadow-md); }
+.word-inspector-quick header, .word-inspector-panel header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.word-inspector-quick h3, .word-inspector-panel h3 { margin: 0; font-size: 21px; overflow-wrap: anywhere; line-height: 1.5; }
+.word-inspector-actions { display: flex; flex-shrink: 0; gap: 2px; }
+.word-inspector-actions button { width: 28px; height: 30px; color: var(--editorial-muted); }
+.word-inspector-actions button[aria-pressed="true"] { color: var(--tech-accent); }
+.word-inspector-content { font-size: 13px; line-height: 1.8; overflow-wrap: anywhere; }
+.word-inspector-content section { padding: 12px 0; border-top: 1px solid var(--editorial-border); margin-top: 10px; }
+.word-inspector-content h4 { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--editorial-muted); font-weight: 500; margin-bottom: 8px; }
+.word-inspector-content h4 span { font-family: ui-monospace, monospace; }
+.word-inspector-muted { color: var(--editorial-muted); font-size: 12px; display: flex; align-items: center; gap: 6px; }
+.word-inspector-meanings { padding-inline-start: 20px; list-style: decimal; }
+.word-inspector-meanings li { padding-inline-start: 4px; margin: 4px 0; }
+.word-inspector-meanings li::marker { color: var(--editorial-muted); }
+.word-inspector-match { color: var(--tech-accent); font-size: 16px; font-weight: 600; }
+.word-inspector-panel { position: fixed; top: 0; bottom: 0; left: 0; width: 350px; display: flex; flex-direction: column; }
+.word-inspector-panel header { padding: 18px 14px; border-bottom: 1px solid var(--editorial-border); }
+.word-inspector-panel header > div:first-child { min-width: 0; }
+.word-inspector-tabs { display: flex; border-bottom: 1px solid var(--editorial-border); padding: 6px 8px 0; gap: 4px; }
+.word-inspector-tabs button { flex: 1; border-radius: 0; border-bottom: 2px solid transparent; font-size: 12px; color: var(--editorial-muted); }
+.word-inspector-tabs button[aria-selected="true"] { color: var(--tech-accent); border-bottom-color: var(--tech-accent); }
+.word-inspector-scroll { overflow-y: auto; min-height: 0; padding: 0 16px 20px; }
+.word-inspector-example { padding: 12px 0; border-bottom: 1px solid var(--editorial-border); }
+.word-inspector-example p + p { color: var(--editorial-muted); margin-top: 8px; }
+.word-inspector-entry { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 14px 0; border-bottom: 1px solid var(--editorial-border); font-size: 13px; }
+.word-inspector-entry > div { min-width: 0; overflow-wrap: anywhere; }
+.word-inspector-entry p { color: var(--editorial-muted); font-size: 12px; margin-top: 4px; }
+@media (min-width: 1024px) {
+  body:has(.word-inspector-panel) .standalone-reader-screen { left: 350px !important; width: auto !important; }
+}
+@media (max-width: 1023px) {
+  .word-inspector-panel { top: auto; width: 100%; height: 52dvh; border-radius: 8px 8px 0 0; padding-bottom: env(safe-area-inset-bottom); }
+  body:has(.word-inspector-panel) .standalone-reader-screen { bottom: 52dvh !important; height: auto !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-inspector-quick { animation: none !important; }
+  .word-inspector-content .animate-spin { animation: none; }
+}

@@ -31,3 +31,4 @@ use the editor.
 
 - The reader UI is a client-only app (IndexedDB) mounted from src/routes/index.tsx via ClientOnly + lazy; keep it out of SSR because it touches window/IndexedDB.
 - Large lexicon JSON files live as lovable-assets pointers and are fetched + cached by src/lib/lexicon.server.ts; repo files must stay under 10 MB.
+- WordInspector owns dictionary presentation only; BookshelfApp retains lookup and vocabulary persistence so both quick and expanded views share existing data.
