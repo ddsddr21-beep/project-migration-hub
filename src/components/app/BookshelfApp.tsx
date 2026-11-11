@@ -2175,6 +2175,24 @@ export default function App() {
 
                 {/* Top Controls & Search */}
                 <div className="paper-controls">
+                  <div className="tech-layout-toggle" role="group" aria-label="طريقة العرض">
+                    <button
+                      onClick={() => setLayoutMode('dual')}
+                      className={layoutMode === 'dual' ? 'active' : ''}
+                      title="عمودان متوازيان"
+                      aria-label="عمودان متوازيان"
+                    >
+                      <i className="fa-solid fa-table-columns" />
+                    </button>
+                    <button
+                      onClick={() => setLayoutMode('interleaved')}
+                      className={layoutMode === 'interleaved' ? 'active' : ''}
+                      title="أسطر متداخلة"
+                      aria-label="أسطر متداخلة"
+                    >
+                      <i className="fa-solid fa-bars-staggered" />
+                    </button>
+                  </div>
                   {/* Batch Management Button if multiple batches exist and not in fullscreen mode */}
                   {currentBookBatches.length > 1 && !isFullscreen && (
                     <button
