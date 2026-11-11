@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import logoAsset from '@/assets/app-logo.jpg.asset.json';
 import { TechStatusBar, TechCommandPalette } from './TechChrome';
+import { WordInspector } from './WordInspector';
 const customAppLogo = logoAsset.url;
 import { 
   Book, 
@@ -173,6 +174,7 @@ export default function App() {
 
   // Selected word & floating lexicon card
   const [selectedWord, setSelectedWord] = useState<SelectedWordData | null>(null);
+  const [wordAnchor, setWordAnchor] = useState<HTMLElement | null>(null);
   const [savedWords, setSavedWords] = useState<SavedWord[]>([]);
 
   // Standalone Lexicon Search Tab
@@ -2001,6 +2003,7 @@ export default function App() {
             if (rowContext) {
               updateActiveRowAndSaveProgress(rowContext.id, false);
             }
+            setWordAnchor(e.currentTarget);
             handleWordClick(token, direction, rowContext);
           }}
           className={`word-link ${highlightClass}`.trim()}
@@ -3822,162 +3825,17 @@ export default function App() {
         </div>
       )}
 
-      {/* ================= FLOATING LOCAL DICTIONARY & CONTEXT CARD ================= */}
       {selectedWord && (
-        <>
-          <div
-            className="smart-lexicon-backdrop"
-            onClick={() => setSelectedWord(null)}
-            aria-label="إغلاق نافذة الترجمة"
-          />
-          <div className="smart-lexicon-floating" role="dialog" aria-modal="true">
-            {/* Header */}
-            <div className="flex items-center justify-between gap-3 mb-2.5">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-xl font-bold font-serif text-[var(--editorial-ivory)]">{selectedWord.word}</h3>
-                {selectedWord.root && (
-                  <span className="text-[11px] font-mono text-amber-300 bg-amber-950/40 border border-amber-500/30 px-2 py-0.5 rounded-md" title="الجذر/الأصل المعجمي">
-                    الأصل: {selectedWord.root}
-                  </span>
-                )}
-                {selectedWord.isPhrasalVerb && (
-                  <span className="text-[11px] font-semibold text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded-md flex items-center gap-1" title="تم التعرف عليه كفعل مركب من عدة كلمات">
-                    <i className="fa-solid fa-layer-group text-[10px]"></i>
-                    فعل مركب (Phrasal Verb)
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center gap-1">
-                {(selectedWord.aiExactMatch || selectedWord.meanings.length > 0) && (
-                  <button
-                    onClick={() => handleCopyMeanings(
-                      [
-                        selectedWord.aiExactMatch ? `[سياق]: ${selectedWord.aiExactMatch}` : '',
-                        ...selectedWord.meanings
-                      ].filter(Boolean).join(', ')
-                    )}
-                    className="btn btn-ghost py-1 px-2 text-xs text-amber-300 hover:text-white"
-                    title="نسخ الترجمة"
-                  >
-                    <i className={`fa-solid ${copyFeedback ? 'fa-check text-emerald-400' : 'fa-copy'}`}></i>
-                    {copyFeedback && <span className="text-xs mr-1 text-emerald-400 font-sans">تم</span>}
-                  </button>
-                )}
-                <button
-                  onClick={() => handleToggleSaveWord({
-                    word: selectedWord.word,
-                    meanings: [
-                      ...(selectedWord.aiExactMatch ? [selectedWord.aiExactMatch] : []),
-                      ...selectedWord.meanings
-                    ],
-                    direction: selectedWord.direction
-                  })}
-                  className={`btn ${isWordSaved(selectedWord.word) ? 'btn-primary' : 'btn-secondary'} py-1 px-2.5 text-xs`}
-                  title={isWordSaved(selectedWord.word) ? 'محفوظة' : 'حفظ'}
-                >
-                  <i className={`fa-solid ${isWordSaved(selectedWord.word) ? 'fa-check' : 'fa-bookmark'}`}></i>
-                  <span className="mr-1 hidden sm:inline">{isWordSaved(selectedWord.word) ? 'محفوظة' : 'حفظ'}</span>
-                </button>
-                <button
-                  onClick={() => setSelectedWord(null)}
-                  className="btn btn-ghost py-1 px-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg"
-                  title="إغلاق النافذة"
-                >
-                  <i className="fa-solid fa-xmark text-sm"></i>
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-3 pt-2 border-t border-white/10">
-              {/* 1. LOCAL DICTIONARY DIRECT TRANSLATION SECTION */}
-              <div className="space-y-2">
-                <div className="text-xs font-semibold text-slate-300 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <i className="fa-solid fa-book-bookmark text-amber-400 text-xs"></i>
-                    <span>الترجمة المباشرة (المعجم المحلي):</span>
-                  </span>
-                  {selectedWord.direction && (
-                    <span className="text-[10px] text-amber-300 bg-amber-950/60 border border-amber-500/20 px-2 py-0.5 rounded">
-                      {selectedWord.direction === 'ar-en' ? 'عربي ➔ إنجليزي' : 'إنجليزي ➔ عربي'}
-                    </span>
-                  )}
-                </div>
-
-                {selectedWord.loading ? (
-                  <div className="flex items-center gap-2 text-xs text-slate-400 py-2">
-                    <i className="fa-solid fa-spinner fa-spin text-amber-400"></i>
-                    <span>جارٍ الاستعلام من المعجم المحلي...</span>
-                  </div>
-                ) : selectedWord.meanings.length > 0 ? (
-                  <div className="flex flex-wrap gap-2 pt-0.5">
-                    {selectedWord.meanings.map((m, idx) => (
-                      <span
-                        key={idx}
-                        className="py-1 px-3 text-sm text-amber-100 bg-[var(--editorial-surface-2)] border border-[var(--editorial-border)] rounded-lg font-medium shadow-sm"
-                      >
-                        {m}
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="p-3 text-center bg-white/5 border border-white/10 rounded-xl text-slate-400 text-xs flex items-center justify-center gap-2">
-                    <i className="fa-solid fa-circle-exclamation text-amber-400 text-sm"></i>
-                    <span>لم يُعثر على ترجمة لهذه الكلمة في المعجم المحلي.</span>
-                  </div>
-                )}
-              </div>
-
-              {/* 2. REAL EXAMPLE SENTENCES SECTION */}
-              {selectedWord.examples && selectedWord.examples.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-white/5">
-                  <div className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                    <i className="fa-solid fa-quote-right text-amber-400 text-xs"></i>
-                    <span>جمل وتطبيقات سياقية:</span>
-                  </div>
-                  <div className="space-y-2">
-                    {selectedWord.examples.map((ex, idx) => (
-                      <div key={idx} className="p-2.5 rounded-xl bg-black/25 border border-white/5 space-y-1 text-xs">
-                        <p className="text-ar font-serif text-amber-200 leading-relaxed">
-                          {ex.arabic}
-                        </p>
-                        <p className="text-en text-slate-400 leading-normal">
-                          {ex.english}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 3. PARALLEL TEXT MATCH (WHEN AVAILABLE) */}
-              {(selectedWord.aiExactMatch || selectedWord.aiLoading) && (
-                <div className="ai-translation-box rounded-xl p-2.5 bg-black/20 border border-white/10 space-y-1.5">
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="ai-tag-badge bg-gradient-to-r from-amber-900/80 via-amber-900/80 to-amber-900/80 border border-amber-400/25 text-amber-100 flex items-center gap-1.5 px-2 py-0.5 rounded-lg text-[11px] font-medium">
-                      <i className="fa-solid fa-wand-magic-sparkles text-[10px] text-amber-300"></i>
-                      <span>المطابقة في النص المقابل</span>
-                    </span>
-
-                    {selectedWord.aiLoading ? (
-                      <span className="text-[10px] text-amber-200/80 flex items-center gap-1">
-                        <i className="fa-solid fa-spinner fa-spin text-xs text-amber-300"></i>
-                        <span>مطابقة النص...</span>
-                      </span>
-                    ) : selectedWord.aiExactMatch ? (
-                      <div className="flex items-baseline gap-2 flex-wrap text-xs">
-                        <span className="text-slate-400">المقابل النصي:</span>
-                        <span className="ai-matched-word font-bold text-amber-200 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                          {selectedWord.aiExactMatch}
-                        </span>
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </>
+        <WordInspector
+          word={selectedWord}
+          anchor={wordAnchor}
+          savedWords={savedWords}
+          isSaved={isWordSaved}
+          onSave={handleToggleSaveWord}
+          onCopy={handleCopyMeanings}
+          copied={copyFeedback}
+          onClose={() => setSelectedWord(null)}
+        />
       )}
 
       {/* ================= COMPREHENSIVE VOCABULARY REVIEW MODAL ================= */}
